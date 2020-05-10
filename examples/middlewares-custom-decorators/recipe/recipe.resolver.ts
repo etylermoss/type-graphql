@@ -4,12 +4,18 @@ import recipeSamples from "./recipe.samples";
 import { Recipe } from "./recipe.type";
 import { RecipesArgs } from "./recipe.args";
 import { ValidateArgs } from "../decorators/validate-args";
+import { AllowedRecipe } from "../decorators/allowed-recipe";
 import CurrentUser from "../decorators/current-user";
 import User from "../user";
 
 @Resolver(of => Recipe)
 export class RecipeResolver {
   private readonly items: Recipe[] = recipeSamples;
+
+  @Query(returns => Recipe, { nullable: true })
+  async recipe(@AllowedRecipe("title", type => String) title: string): Promise<Recipe | undefined> {
+    return await this.items.find(recipe => recipe.title === title);
+  }
 
   @Query(returns => [Recipe])
   @ValidateArgs(RecipesArgs)
