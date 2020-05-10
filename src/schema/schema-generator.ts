@@ -703,6 +703,19 @@ export abstract class SchemaGenerator {
           ),
           defaultValue: param.typeOptions.defaultValue,
         };
+      } else if (param.kind === "customArg") {
+        args[param.name] = {
+          description: param.description,
+          type: this.getGraphQLInputType(
+            target,
+            propertyName,
+            param.getType(),
+            param.typeOptions,
+            param.index,
+            param.name,
+          ),
+          defaultValue: param.typeOptions.defaultValue,
+        };
       } else if (param.kind === "args") {
         const argumentType = getMetadataStorage().argumentTypes.find(
           it => it.target === param.getType(),

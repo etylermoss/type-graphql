@@ -41,6 +41,12 @@ export interface CustomParamMetadata extends BasicParamMetadata {
   kind: "custom";
   resolver: (resolverData: ResolverData<any>) => any;
 }
+export interface CustomArgParamMetadata extends CommonArgMetadata {
+  kind: "customArg";
+  name: string;
+  description: string | undefined;
+  resolver: (resolverData: ResolverData<any>, argValue: Promise<any>) => any;
+}
 // prettier-ignore
 export type ParamMetadata =
   | InfoParamMetadata
@@ -50,4 +56,5 @@ export type ParamMetadata =
   | ArgParamMetadata
   | ArgsParamMetadata
   | CustomParamMetadata
+  | CustomArgParamMetadata
 ;

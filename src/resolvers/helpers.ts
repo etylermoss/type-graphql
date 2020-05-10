@@ -55,6 +55,13 @@ export function getParams(
           return pubSub;
         case "custom":
           return paramInfo.resolver(resolverData);
+        case "customArg":
+          const argVal = validateArg(
+            convertArgToInstance(paramInfo, resolverData.args),
+            globalValidate,
+            paramInfo.validate,
+          );
+          return paramInfo.resolver(resolverData, argVal);
       }
     });
   if (paramValues.some(isPromiseLike)) {

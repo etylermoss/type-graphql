@@ -1,4 +1,9 @@
-import { ArgParamMetadata, ClassMetadata, ArgsParamMetadata } from "../metadata/definitions";
+import {
+  ArgParamMetadata,
+  CustomArgParamMetadata,
+  ClassMetadata,
+  ArgsParamMetadata,
+} from "../metadata/definitions";
 import { convertToType } from "../helpers/types";
 import { ArgsDictionary, ClassType } from "../interfaces";
 import { getMetadataStorage } from "../metadata/getMetadataStorage";
@@ -141,7 +146,10 @@ export function convertArgsToInstance(argsMetadata: ArgsParamMetadata, args: Arg
   return convertToType(ArgsClass, transformedFields);
 }
 
-export function convertArgToInstance(argMetadata: ArgParamMetadata, args: ArgsDictionary) {
+export function convertArgToInstance(
+  argMetadata: ArgParamMetadata | CustomArgParamMetadata,
+  args: ArgsDictionary,
+) {
   const argValue = args[argMetadata.name];
   const argTarget = argMetadata.getType();
   return convertValuesToInstances(argTarget, argValue);
